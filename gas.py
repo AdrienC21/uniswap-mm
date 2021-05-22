@@ -7,6 +7,13 @@ import requests
 
 
 def get_gas():
+    """Scrap the web to obtain data relative to gas on ethereum platform
+
+    Returns:
+        [dictionnary]: return a dictionnary with 2 keys : "gas" and "gasPrice".
+        gas (int) is the average gas used in Gwei for Swap on Uniswap V2
+        gasPrice (int) is the current gas price for slow transactions (<30 min)
+    """
 
     res = {}
 
