@@ -51,13 +51,13 @@ dest_address = config.address
 deadline = 600
 ```
 
-Run the file run_market_maker.py to process a swap on Uniswap.
+Run the file run_market_maker.py to process a swap on Uniswap. The hash transaction will be print in the console.
 
 ## Quick Overview
 
-The library is a wrapper of an already existing Web3 / Uniswap wrapper entitled uniswap-python-v2. The file uniswap_tools.py has been modified to correct errors and to add an automatic extraction of the average gas used on Uniswap and an estimation of the current gas price (this function is inside gas.py).
+The library is a wrapper of an already existing Web3 / Uniswap wrapper entitled uniswap-python-v2. The file uniswap_tools.py has been modified to correct some errors and to add an automatic extraction of the average gas used on Uniswap and an estimation of the current gas price (function inside gas.py).
 
-Utils.py contains the core functions and transaction_information.py and config.py store parameters.
+Utils.py contains the core functions and transaction_information.py and config.py contain parameters that need to be edited.
 
 run_markmet_maker.py execute a trade.
 
@@ -73,14 +73,47 @@ Those features are obtained here :
 
 ### gas.py
 
-[get_pair](https://uniswap.org/docs/v2/smart-contracts/factory/#getpair)
+[get_gas](https://github.com/AdrienC21/uniswap-mm/blob/0f00168e25c00bb5b40ecbb0ec73fbf1665866e8/gas.py#L9)
 ```python
-token_a = "0x20fe562d797a42dcb3399062ae9546cd06f63280"
-token_b = "0xc778417E063141139Fce010982780140Aa0cD5Ab"
-pair = client.get_pair(token_a, token_b)
+d = get_gas()
+gas = get_gas()["gas"]
+gasPrice = get_gas()["gasPrice"]
 ```
-Returns the address of the pair for ``token_a`` and ``token_b``, if it has been created, else ``0x0000000000000000000000000000000000000000``.
+Scrap the web to obtain data relative to gas on ethereum platform.
 ### utils.py
 
+[extract_token](https://github.com/AdrienC21/uniswap-mm/blob/0f00168e25c00bb5b40ecbb0ec73fbf1665866e8/utils.py#L11)
+```python
+# Link corresponding to BAT is :
+# https://coinmarketcap.com/fr/currencies/basic-attention-token/
+# Hence coin_name = basic-attention-token" if we want to use BAT
+coin_name = "basic-attention-token"
+token_address = extract_token(coin_name)
+
+# token_address = "0x0d8775f648430679a709e98d2b0cb6250d2887ef"
+```
+Extract the contract address of the token coin_name based on etherscan.io database. The name coin_name must be the one contained in its coinmarketcap's url.
+
+[exchange](https://github.com/AdrienC21/uniswap-mm/blob/0f00168e25c00bb5b40ecbb0ec73fbf1665866e8/utils.py#L49)
+```python
+from uniswap_tools import *
+
+# address : wallet address, ChecksumAddress format
+client = UniswapV2Client(address, config.private_key, provider=config.provider)
+
+status = "sell"
+coin_a = "ethereum"
+coin_b = "basic-attention-token"
+amount = 0.005
+min_max = 0.
+dest_address = config.address
+deadline = 600  # 10 minutes
+
+t = exchange(client, status, coin_a, coin_b, amount_f, min_max_f,
+             dest_address, deadline=600)
+
+# t : hash transaction need to be converted in string using t.hex()
+```
+Process a transaction on Uniswap.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

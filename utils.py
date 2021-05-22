@@ -48,7 +48,7 @@ def extract_token(coin_name):
 
 def exchange(client, status, coin_a, coin_b, amount_f, min_max_f,
              dest_address, deadline=600):
-    """Process the transaction
+    """Process a transaction
 
     Args:
         client (UniswapObject): Store our private information
