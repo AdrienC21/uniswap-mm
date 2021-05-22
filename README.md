@@ -65,9 +65,9 @@ An estimation of gas parameters and the address of the different crypto we want 
 
 Those features are obtained here :
 
-![alt text](images/token.png?raw=true "Title")
+![alt text](images/token.png?raw=true "Address")
 
-![alt text](images/gas.png?raw=true "Title")
+![alt text](images/gas.png?raw=true "Gas data")
 
 ## Documentation
 
